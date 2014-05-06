@@ -13,8 +13,14 @@ def load_data(url, type)
   challenges = HTTParty.get(url)['data']
   # post each one to elasticsearch
   challenges.each  do |c| 
-    results = HTTParty.post("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/#{type}/#{c['challengeId']}", :body => c.to_json)
-    p "Pushing: #{c['challengeName']}"    
-    p "=== ERROR indexing #{c['challengeId']}" if results['error']
+    if c['challengeType'].to_s == 'Design First2Finish'
+      c['checkpointSubmissionEndDate'] = c['submissionEndDate']
+    end   
+    p "Pushing: #{c['challengeName']} to /#{ENV['INDEX_CHALLENGES']}/#{type}/#{c['challengeId']}"
+    results = HTTParty.post("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/#{type}/#{c['challengeId']}", :body => c.to_json) 
+    if results['error']
+      p "=== ERROR indexing #{c['challengeId']}"
+      p results
+    end
   end 
 end
