@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>[topcoder] Search API</title>
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+  <div class="content" style="padding-left:5px;padding-bottom:25px">
+  <h1>[topcoder] Search API</h1>
+
+  <p>This is running against live, production data in Elasticsearch coming from the <a href="http://api.topcoder.com/v2/develop/challenges">API</a>.</p>
+
+  <p>By default, all challenge type data is searchable together unless you specify otherwise. For instance, if you search for "IDOL" it will return all design and development challenges with the keyword "IDOL". If you want to only search specific types of challenges you can do so and return results for the specified type of challenge.</p>
+
+  <h3>Keyword search anywhere in the challenge</h3>
+
+  <a href="/challenges/search?q=assembly">/challenges/search?q=assembly</a>
+
+  <h3>Keyword search in challenge name</h3>
+
+  <a href="/challenges/search?q=challengeName:IDOL">/challenges/search?q=challengeName:IDOL</a>
+
+  <h3>Return challenge by ID</h3>
+
+  <a href="/challenges/search?q=challengeId:30042021">/challenges/search?q=challengeId:30042021</a>
+
+  <h3>Return all "First2Finish' challenges</h3>
+
+  <a href="/challenges/search?q=challengeType:First2Finish">/challenges/search?q=challengeType:First2Finish</a>
+
+  <h3>Search for all challenges with 'Javascript' as one of the platform</h3>
+
+  <a href="/challenges/search?q=technologies:javascript">/challenges/search?q=technologies:javascript</a>
+
+  <h3>Search for all challenges with 'Apex' or 'HTML' as one of the technologies</h3>
+
+  <a href="/challenges/search?q=technologies:Apex,HTML">/challenges/search?q=technologies:Apex,HTML</a>
+
+  <h3>Search for all challenges with 0 submissions</h3>
+
+  <a href="/challenges/search?q=numSubmissions:0">/challenges/search?q=numSubmissions:0</a>
+
+  <h1>Searching by Specific Challenge Type</h1>
+
+  Virtually all of the above API calls work when specifying the type of challenge to return:
+
+  <h3>Return any challenge with "IDOL" in the challenge name</h3>
+
+  <a href="/challenges/search?q=challengeName:IDOL">/challenges/search?q=challengeName:IDOL</a>
+
+  <h3>Return design challenges with "IDOL" in the challenge name</h3>
+
+  <a href="/challenges/design/search?q=challengeName:IDOL">/challenges/design/search?q=challengeName:IDOL</a>
+
+  <h3>Return development challenges with "IDOL" in the challenge name</h3>
+
+  <a href="/challenges/development/search?q=challengeName:IDOL">/challenges/development/search?q=challengeName:IDOL</a>
+
+  </div>
+</body>
+</html>
+
