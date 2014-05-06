@@ -21,6 +21,16 @@ get '/challenges/design/search' do
   results['hits']['hits'].to_json
 end 
 
+options '/challnges/*' do
+  200
+end
+
 not_found do
   halt 404, 'page not found'
+end
+
+before do
+   content_type :json    
+   headers 'Access-Control-Allow-Origin' => '*', 
+            'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
 end
