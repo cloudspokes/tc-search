@@ -21,7 +21,7 @@ get '/challenges/design/search' do
   results['hits']['hits'].to_json
 end 
 
-options '/challnges/*' do
+options '/challenges/*' do
   200
 end
 
