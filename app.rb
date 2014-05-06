@@ -35,10 +35,6 @@ not_found do
   halt 404, 'page not found'
 end
 
-def search
-
-end
-
 def load_data(url, type)
   # get all open challenges from API
   challenges = HTTParty.get(url)['data']
