@@ -1,11 +1,11 @@
 desc "Calls the API and loads all development challenges into Elasticsearch"
 task :load_development do
-  load_data("http://api.topcoder.com/v2/develop/challenges", "development")
+  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000", "development")
 end
 
 desc "Calls the API and loads all design challenges into Elasticsearch"
 task :load_design do
-  load_data("http://api.topcoder.com/v2/design/challenges", "design")
+  load_data("http://api.topcoder.com/v2/design/challenges?pageSize=1000", "design")
 end
 
 def load_data(url, type)
