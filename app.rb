@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require 'httparty'
+require 'sinatra/cross_origin'
 
 enable cross_origin
 
