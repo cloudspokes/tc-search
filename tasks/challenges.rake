@@ -13,9 +13,7 @@ def load_data(url, type)
   challenges = HTTParty.get(url)['data']
   # post each one to elasticsearch
   challenges.each  do |c| 
-    if c['challengeType'].to_s == 'Design First2Finish'
-      c['checkpointSubmissionEndDate'] = c['submissionEndDate']
-    end   
+    clean_up_json(c)
     p "Pushing: #{c['challengeName']} to /#{ENV['INDEX_CHALLENGES']}/#{type}/#{c['challengeId']}"
     results = HTTParty.post("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/#{type}/#{c['challengeId']}", :body => c.to_json) 
     if results['error']
@@ -23,4 +21,24 @@ def load_data(url, type)
       p results
     end
   end 
+end
+
+def clean_up_json(c)
+
+    # iterate through all "date" fields and delete keys with "" values
+    dates_fields = c.keys.select { |x| x.include? 'Date' }
+    dates_fields.each do |f|
+      c.delete(f) if c[f] == ""
+    end
+
+    # check for technologies with a single space element
+    if c['technologies'].size == 1 && c['technologies'][0] == ""
+      c['technologies'] = []
+    end
+
+    # check for platforms with a single space element
+    if c['platforms'].size == 1 && c['platforms'][0] == ""
+      c['platforms'] = []
+    end
+
 end
