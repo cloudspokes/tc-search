@@ -17,3 +17,10 @@ Rake task that run to periodically load data from tcapi into Elasticsearch.
 ### Check if a challenge exists
 
     curl -i -XHEAD /challenges/development/30042552
+
+May want to switch at some point to the new APIs
+
+https://api.topcoder.com/v2/challenges/active?type=design
+https://api.topcoder.com/v2/challenges/open?type=design
+https://api.topcoder.com/v2/challenges/upcoming?type=design
+https://api.topcoder.com/v2/challenges/past?type=design

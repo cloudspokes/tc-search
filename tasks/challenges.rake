@@ -2,12 +2,14 @@ desc "Calls the API and loads all development challenges into Elasticsearch"
 task :load_development do
   load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=OPEN", "development")
   load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=ACTIVE", "development")
+  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=20&listType=PAST&sortColumn=challengeId&sortOrder=desc", "development")
 end
 
 desc "Calls the API and loads all design challenges into Elasticsearch"
 task :load_design do
   load_data("http://api.topcoder.com/v2/design/challenges?pageSize=1000&listType=OPEN", "design")
   load_data("http://api.topcoder.com/v2/design/challenges?pageSize=1000&listType=ACTIVE", "design")
+  load_data("http://api.topcoder.com/v2/design/challenges?pageSize=20&listType=PAST&sortColumn=challengeId&sortOrder=desc", "design")
 end
 
 def load_data(url, type)
@@ -26,6 +28,13 @@ def load_data(url, type)
 end
 
 def clean_up_json(c)
+
+    # if the status is blank then it is 'completed'
+    c['currentStatus'] = 'Completed' if c['currentStatus'] == ''
+    c['currentPhaseName'] = 'Completed' if c['currentPhaseName'] == ''
+
+    # remove digitalrun points --returning as string sometimes
+    c.delete('digitalRunPoints')
 
     # iterate through all "date" fields and delete keys with "" values
     dates_fields = c.keys.select { |x| x.include? 'Date' }
