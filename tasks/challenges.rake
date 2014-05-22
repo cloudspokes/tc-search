@@ -1,15 +1,21 @@
 desc "Calls the API and loads all development challenges into Elasticsearch"
-task :load_development do
-  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=OPEN", "development")
-  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=ACTIVE", "development")
-  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=20&listType=PAST&sortColumn=challengeId&sortOrder=desc", "development")
+task :load_develop do
+  p '=== LOADING OPEN DEVELOP ==='
+  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=OPEN", "develop")
+  p '=== LOADING ACTIVE DEVELOP ==='
+  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=ACTIVE", "develop")
+  p '=== LOADING PAST DEVELOP ==='
+  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=100&listType=PAST&sortColumn=challengeId&sortOrder=desc", "develop")
 end
 
 desc "Calls the API and loads all design challenges into Elasticsearch"
 task :load_design do
+  p '=== LOADING OPEN DESIGN ==='
   load_data("http://api.topcoder.com/v2/design/challenges?pageSize=1000&listType=OPEN", "design")
+  p '=== LOADING ACTIVE DESIGN ==='
   load_data("http://api.topcoder.com/v2/design/challenges?pageSize=1000&listType=ACTIVE", "design")
-  load_data("http://api.topcoder.com/v2/design/challenges?pageSize=20&listType=PAST&sortColumn=challengeId&sortOrder=desc", "design")
+  p '=== LOADING PAST DESIGN ==='
+  load_data("http://api.topcoder.com/v2/design/challenges?pageSize=100&listType=PAST&sortColumn=challengeId&sortOrder=desc", "design")
 end
 
 def load_data(url, type)

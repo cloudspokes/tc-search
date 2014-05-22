@@ -18,6 +18,10 @@ Rake task that run to periodically load data from tcapi into Elasticsearch.
 
     curl -i -XHEAD /challenges/development/30042552
 
+### Delete a challenge
+
+    curl -XDELETE '/challenges/development/30042685'
+
 May want to switch at some point to the new APIs
 
 https://api.topcoder.com/v2/challenges/active?type=design
