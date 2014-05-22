@@ -26,7 +26,11 @@
 
         <p>By default, all challenge type data is searchable together unless you specify otherwise. For instance, if you <a href="http://localhost:9393/challenges/search?q=IDOL">search for &quot;IDOL&quot;</a> it will return all design and development challenges with the keyword &quot;IDOL&quot; anywhere in the challenge. If you want to only search specific types of challenges you can do so (see bottom of page) and return results for the specified type of challenge.</p>
 
-        <p>Essentially you can search by almost any key in the JSON document by substituting it below in the query param. The values for the query parameter (q) must be encoded.</p>
+        <p>Essentially you can search by almost any key in the JSON document by substituting it below in the query param. The values for the query parameter (q) must be encoded. Supported query options include:</p>
+
+        <ul>
+            <li>maxResults - limit the number of records returned. Defaults to 25. Example: ?q=assembly&maxResults=5</li>
+        </ul>
 
         <h2>Simple Searches</h2>
 
