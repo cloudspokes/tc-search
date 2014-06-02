@@ -5,7 +5,7 @@ task :load_develop do
   p '=== LOADING ACTIVE DEVELOP ==='
   load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=ACTIVE", "develop")
   p '=== LOADING PAST DEVELOP ==='
-  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=100&listType=PAST&sortColumn=challengeId&sortOrder=desc", "develop")
+  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=25&pageIndex=1&listType=PAST&sortColumn=challengeId&sortOrder=desc", "develop")
 end
 
 desc "Calls the API and loads all design challenges into Elasticsearch"
@@ -20,7 +20,7 @@ end
 
 def load_data(url, type)
   # get all open challenges from API
-  challenges = HTTParty.get(url)['data']
+  challenges = HTTParty.get(url, {:timeout => 250})['data']
   # post each one to elasticsearch
   challenges.each  do |c| 
     clean_up_json(c)

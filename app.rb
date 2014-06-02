@@ -9,13 +9,11 @@ end
 
 get '/challenges/search' do
   response['Access-Control-Allow-Origin'] = '*'
-  p "==> /_search?q=#{URI::encode(params[:q])}"
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/develop/search' do
-  p "==> /develop/_search?q=#{URI::encode(params[:q])}"
   response['Access-Control-Allow-Origin'] = '*'
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/develop/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
@@ -23,14 +21,12 @@ end
 
 # LEGACY
 get '/challenges/development/search' do
-  p "==> /development/_search?q=#{URI::encode(params[:q])}"
   response['Access-Control-Allow-Origin'] = '*'
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/development/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/design/search' do
-  p "==> /design/_search?q=#{URI::encode(params[:q])}"
   response['Access-Control-Allow-Origin'] = '*'
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/design/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
