@@ -5,7 +5,9 @@ task :load_develop do
   p '=== LOADING ACTIVE DEVELOP ==='
   load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=ACTIVE", "develop")
   p '=== LOADING PAST DEVELOP ==='
-  load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=25&pageIndex=1&listType=PAST&sortColumn=challengeId&sortOrder=desc", "develop")
+  (1..8).each do |pageIndex|
+    load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=25&pageIndex=#{pageIndex}&listType=PAST&sortColumn=challengeId&sortOrder=desc", "develop")
+  end
 end
 
 desc "Calls the API and loads all design challenges into Elasticsearch"
