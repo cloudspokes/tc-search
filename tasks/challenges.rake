@@ -23,10 +23,11 @@ end
 def load_data(url, type)
   # get all open challenges from API
   challenges = HTTParty.get(url, {:timeout => 250})['data']
+  p "---- loading #{challenges.size} challenges"
   # post each one to elasticsearch
   challenges.each  do |c| 
     clean_up_json(c)
-    p "Pushing: #{c['challengeName']} to /#{ENV['INDEX_CHALLENGES']}/#{type}/#{c['challengeId']}"
+    p "#{c['challengeName']} - #{c['challengeId']}" if ENV['PAPERTRAIL_DEBUG'] == 'true'
     results = HTTParty.post("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/#{type}/#{c['challengeId']}", :body => c.to_json) 
     if results['error']
       p "=== ERROR indexing #{c['challengeId']}"
