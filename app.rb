@@ -8,26 +8,22 @@ get '/' do
 end
 
 get '/challenges/search' do
-  response['Access-Control-Allow-Origin'] = '*'
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/develop/search' do
-  response['Access-Control-Allow-Origin'] = '*'
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/develop/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 # LEGACY
 get '/challenges/development/search' do
-  response['Access-Control-Allow-Origin'] = '*'
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/development/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/design/search' do
-  response['Access-Control-Allow-Origin'] = '*'
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/design/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
@@ -45,6 +41,16 @@ end
 
 not_found do
   halt 404, 'page not found'
+end
+
+options '/challenges/*' do
+  200
+end
+
+before do
+   content_type :json    
+   headers 'Access-Control-Allow-Origin' => '*', 
+            'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
 end
 
 # supported options
