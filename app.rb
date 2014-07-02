@@ -8,22 +8,26 @@ get '/' do
 end
 
 get '/challenges/search' do
+  content_type :json    
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/develop/search' do
+  content_type :json      
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/develop/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 # LEGACY
 get '/challenges/development/search' do
+  content_type :json      
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/development/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/design/search' do
+  content_type :json      
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/design/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
@@ -48,9 +52,8 @@ options '/challenges/*' do
 end
 
 before do
-   content_type :json    
    headers 'Access-Control-Allow-Origin' => '*', 
-            'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
+      'Access-Control-Allow-Methods' => ['OPTIONS', 'GET', 'POST']  
 end
 
 # supported options
