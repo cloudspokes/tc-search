@@ -8,26 +8,22 @@ get '/' do
 end
 
 get '/challenges/search' do
-  content_type :json    
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/develop/search' do
-  content_type :json      
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/develop/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 # LEGACY
 get '/challenges/development/search' do
-  content_type :json      
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/development/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
 
 get '/challenges/design/search' do
-  content_type :json      
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/design/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
 end 
