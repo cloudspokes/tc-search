@@ -1,3 +1,4 @@
 .DS_Store
-.env
+environment.sh
+.notes
 dump.rdb
