@@ -1,4 +1,54 @@
 desc "Calls the API and loads all development challenges into Elasticsearch"
+task :load_develop_v2 do
+  p '=== LOADING OPEN DEVELOP ==='
+  load_data_v2("https://api.topcoder.com/v2/challenges/open?type=develop", "develop")
+  p '=== LOADING ACTIVE DEVELOP ==='
+  load_data_v2("https://api.topcoder.com/v2/challenges/active?type=develop", "develop") 
+  p '=== LOADING PAST DEVELOP ==='
+  load_data_v2("https://api.topcoder.com/v2/challenges/past?type=develop&pageSize=1000", "develop")   
+end
+
+task :load_design_v2 do
+  p '=== LOADING OPEN DESIGN ==='
+  load_data_v2("https://api.topcoder.com/v2/challenges/open?type=design", "design")
+  p '=== LOADING ACTIVE DESIGN ==='
+  load_data_v2("https://api.topcoder.com/v2/challenges/active?type=design", "design") 
+  p '=== LOADING PAST DESIGN ==='
+  load_data_v2("https://api.topcoder.com/v2/challenges/past?type=design&pageSize=1000", "design")   
+end
+
+def load_data_v2(url, type)
+  # get all open challenges from API
+  challenges = HTTParty.get(url, {:timeout => 1000})['data']
+  p "---- loading #{challenges.size} challenges"
+  # post each one to elasticsearch
+  challenges.each  do |c| 
+    clean_up_json_v2(c)
+    p "#{c['challengeName']} - #{c['challengeId']}" if ENV['PAPERTRAIL_DEBUG'] == 'true'
+    results = HTTParty.post("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES_V2']}/#{type}/#{c['challengeId']}", :body => c.to_json) 
+    if results['error']
+      p "=== ERROR indexing #{c['challengeId']}"
+      p results
+    end
+  end 
+end
+
+def clean_up_json_v2(c)
+
+    # if the status is blank then it is 'completed'
+    c['currentPhaseName'] = 'Completed' if c['currentPhaseName'] == ''
+
+    # iterate through all "date" fields and delete keys with "" values
+    dates_fields = c.keys.select { |x| x.include? 'Date' }
+    dates_fields.each do |f|
+      c.delete(f) if c[f] == ""
+    end
+
+end
+
+# ==================================== start v1
+
+desc "Calls the API and loads all development challenges into Elasticsearch"
 task :load_develop do
   p '=== LOADING OPEN DEVELOP ==='
   load_data("http://api.topcoder.com/v2/develop/challenges?pageSize=1000&listType=OPEN", "develop")

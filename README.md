@@ -28,3 +28,24 @@ https://api.topcoder.com/v2/challenges/active?type=design
 https://api.topcoder.com/v2/challenges/open?type=design
 https://api.topcoder.com/v2/challenges/upcoming?type=design
 https://api.topcoder.com/v2/challenges/past?type=design
+
+### Running Rake tasks
+
+    foreman run rake TASKNAME
+
+This will load the environment variables from .env.
+
+### Challenge statuses
+
+Status = Active
+  Registation
+  Appeals
+
+ Status = Cancelled - Failed Screening
+
+
+https://topcoder.com/direct/contest/detail.action?projectId=
+
+https://topcoder.com/direct/contest/detail.action?projectId=
+
+https://topcoder.com/direct/contest/detail.action?projectId=

@@ -2,3 +2,4 @@
 environment.sh
 .notes
 dump.rdb
+.env

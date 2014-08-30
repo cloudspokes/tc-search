@@ -22,7 +22,7 @@
               
         <h1>[topcoder] Search API</h1>
 
-        <p>This is running against live, production data in Elasticsearch coming from the API. A task runs every 10 minutes that calls the <a href="http://docs.tcapi.apiary.io/">topcoder API</a> and loads development and design challenges into Elasticsearch.</p>
+        <p>This is running against live, production data in Elasticsearch coming from the API A task runs every 10 minutes that calls the <a href="http://docs.tcapi.apiary.io/">topcoder API</a> and loads development and design challenges into Elasticsearch. The actual search is done using the [Elasticsearch Lite API](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/search-lite.html).</p>
 
         <p>By default, all challenge type data is searchable together unless you specify otherwise. For instance, if you <a href="http://localhost:9393/challenges/search?q=IDOL">search for &quot;IDOL&quot;</a> it will return all design and development challenges with the keyword &quot;IDOL&quot; anywhere in the challenge. If you want to only search specific types of challenges you can do so (see bottom of page) and return results for the specified type of challenge.</p>
 
@@ -52,11 +52,13 @@
         <p>If you want to search by more than one parameter, make sure you encode the q parameter. See <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//query-dsl-query-string-query.html#query-string-syntax">this Elasticsearch help page</a> for more information about complex query strings.</p>
 
         <ol>
-        <li><a href="/challenges/search?q=challengeName%3AIDOL%20-currentStatus%3ACompleted">/challenges/search?q=challengeName%3AIDOL%20-currentStatus%3ACompleted</a> - All challenges with &quot;IDOL&quot; in the challenge name that are not &#39;Completed&#39; status (e.g, q=challengeName:IDOL -currentStatus:Completed)</li>
-        <li><a href="/challenges/search?q=challengeType%3DAssembly%20platforms%3AHTML%20-technologies%3APHP">/challenges/search?q=challengeType%3DAssembly%20platforms%3AHTML%20-technologies%3APHP</a> - All &#39;Assembly&quot; challenge type for HTML platform but <strong>not</strong> PHP technology (e.g, q=challengeType=Assembly platforms:HTML -technologies:PHP)</li>
+        <li><a href="/challenges/search?q=platforms:HP%20IDOL%20OnDemand%20AND%20currentPhaseName:(Submission%20OR%20Registration)">/challenges/search?q=platforms:HP%20IDOL%20OnDemand%20AND%20currentPhaseName:(Submission%20OR%20Registration)</a> - All challenges with &quot;HP IDOL OnDemand&quot; platform that are in &#39;Registration&#39; or &#39;Submission&#39; phase (e.g, q=platforms:HP IDOL OnDemand AND currentPhaseName:(Submission OR Registration))</li>
+        <li><a href="http://localhost:9393/challenges/search?q=challengeType:Assembly%20AND%20technologies:HTML%20-technologies:CSS">http://localhost:9393/challenges/search?q=challengeType:Assembly%20AND%20technologies:HTML%20-technologies:CSS</a> - All &#39;Assembly&quot; challenge type for HTML technology but <strong>not</strong> CSS technology (e.g, q=challengeType:Assembly AND technologies:HTML -technologies:CSS)</li>
         <li><a href="/challenges/search?q=challengeType%3Acode%20numRegistrants%3A%3E20">/challenges/search?q=challengeType%3Acode%20numRegistrants%3A&gt;20</a> - All &#39;code&#39; challenges with more than 20 registrants (e.g, q=challengeType:code numRegistrants:&gt;20)</li>
         <li><a href="/challenges/search?q=challengeType%3Acode%20numRegistrants%3A%5B1%20TO%205%5D">/challenges/search?q=challengeType%3Acode%20numRegistrants%3A%5B1%20TO%205%5D</a> - All &#39;code&#39; challenges with 5-10 registrants (e.g, q=challengeType:code numRegistrants:[1 TO 5]</li>
         </ol>
+
+        <p>See the <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//query-dsl-query-string-query.html#query-string-syntax" target="_blank">Elasticsearch query syntax</a> for more info.</p>
 
         <h2>Searching by Specific Challenge Type</h2>
 
