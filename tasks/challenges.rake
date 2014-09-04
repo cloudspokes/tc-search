@@ -5,7 +5,9 @@ task :load_develop_v2 do
   p '=== LOADING ACTIVE DEVELOP ==='
   load_data_v2("https://api.topcoder.com/v2/challenges/active?type=develop", "develop") 
   p '=== LOADING PAST DEVELOP ==='
-  load_data_v2("https://api.topcoder.com/v2/challenges/past?type=develop&pageSize=1000", "develop")   
+  (1..3).each do |pageIndex|
+    load_data_v2("https://api.topcoder.com/v2/challenges/past?type=develop&pageSize=200&pageIndex=#{pageIndex}", "develop")  
+  end   
 end
 
 task :load_design_v2 do

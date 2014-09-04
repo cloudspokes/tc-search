@@ -34,18 +34,3 @@ https://api.topcoder.com/v2/challenges/past?type=design
     foreman run rake TASKNAME
 
 This will load the environment variables from .env.
-
-### Challenge statuses
-
-Status = Active
-  Registation
-  Appeals
-
- Status = Cancelled - Failed Screening
-
-
-https://topcoder.com/direct/contest/detail.action?projectId=
-
-https://topcoder.com/direct/contest/detail.action?projectId=
-
-https://topcoder.com/direct/contest/detail.action?projectId=
