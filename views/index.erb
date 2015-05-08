@@ -33,6 +33,9 @@
             <li>sort - the sorting for records returned. Defaults to the internal <i>_score</i> field. Example: ?q=assembly&sort=numSubmissions:desc</li>
         </ul>
 
+        <p>By default, results are returned for both design and development challenges. You can also specify to only
+          search design or development challenges. See bottom of page. </p>
+
         <h2>Simple Searches</h2>
 
         <ol>
@@ -76,8 +79,8 @@
 
         <ol>
         <li><a href="/challenges/v2/search?q=challengeName:IDOL">/challenges/v2/search?q=challengeName:IDOL</a> - Returns <strong>any</strong> challenge with &quot;IDOL&quot; in the challenge name</li>
-        <li><a href="/challenges/design/search?q=challengeName:IDOL">/challenges/design/search?q=challengeName:IDOL</a> - Returns <strong>design</strong> challenges with &quot;IDOL&quot; in the challenge name</li>
-        <li><a href="/challenges/develop/search?q=challengeName:IDOL">/challenges/develop/search?q=challengeName:IDOL</a> - Returns <strong>development</strong> challenges with &quot;IDOL&quot; in the challenge name</li>
+        <li><a href="/challenges/v2/design/search?q=challengeName:IDOL">/challenges/v2/design/search?q=challengeName:IDOL</a> - Returns <strong>design</strong> challenges with &quot;IDOL&quot; in the challenge name</li>
+        <li><a href="/challenges/v2/develop/search?q=challengeName:IDOL">/challenges/v2/develop/search?q=challengeName:IDOL</a> - Returns <strong>development</strong> challenges with &quot;IDOL&quot; in the challenge name</li>
         </ol>
 
 

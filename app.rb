@@ -12,6 +12,16 @@ get '/challenges/v2/search' do
   results['hits']['hits'].to_json
 end
 
+get '/challenges/v2/develop/search' do
+  results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES_V2']}/develop/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}&sort=#{opts['sort']}")
+  results['hits']['hits'].to_json
+end
+
+get '/challenges/v2/design/search' do
+  results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES_V2']}/design/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}&sort=#{opts['sort']}")
+  results['hits']['hits'].to_json
+end
+
 get '/challenges/search' do
   results = HTTParty.get("#{ENV['BONSAI_URL']}/#{ENV['INDEX_CHALLENGES']}/_search?q=#{URI::encode(params[:q])}&size=#{opts['max_results']}")
   results['hits']['hits'].to_json
