@@ -9,7 +9,7 @@ Rake task that run to periodically load data from tcapi into Elasticsearch.
 ### Create an Index
 
     curl -X POST /[index-name]
-    
+
 ### Delete an Index
 
     curl -XDELETE /[index-name]

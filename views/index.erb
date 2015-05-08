@@ -19,32 +19,33 @@
   <body>
 
       <div class="container">
-              
+
         <h1>[topcoder] Search API</h1>
 
-        <p>This is running against live, production data in Elasticsearch coming from the API A task runs every 10 minutes that calls the <a href="http://docs.tcapi.apiary.io/">topcoder API</a> and loads development and design challenges into Elasticsearch. The actual search is done using the [Elasticsearch Lite API](http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/search-lite.html).</p>
+        <p>This is running against live, production data in Elasticsearch coming from the API A task runs every 10 minutes that calls the <a href="http://docs.tcapi.apiary.io/">topcoder API</a> and loads development and design challenges into Elasticsearch. The actual search is done using the <a href="http://www.elasticsearch.org/guide/en/elasticsearch/guide/current/search-lite.html" target="_blank">Elasticsearch Lite API</a>. See the <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//query-dsl-query-string-query.html#query-string-syntax" target="_blank">Elasticsearch query syntax</a> for more info or <a href="http://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html" target="_blank">URI Search</a>.</p>
 
-        <p>By default, all challenge type data is searchable together unless you specify otherwise. For instance, if you <a href="http://localhost:9393/challenges/search?q=IDOL">search for &quot;IDOL&quot;</a> it will return all design and development challenges with the keyword &quot;IDOL&quot; anywhere in the challenge. If you want to only search specific types of challenges you can do so (see bottom of page) and return results for the specified type of challenge.</p>
+        <p>By default, all challenge type data is searchable together unless you specify otherwise. For instance, if you <a href="/challenges/v2/search?q=IDOL">search for &quot;IDOL&quot;</a> it will return all design and development challenges with the keyword &quot;IDOL&quot; anywhere in the challenge. If you want to only search specific types of challenges you can do so (see bottom of page) and return results for the specified type of challenge.</p>
 
         <p>Essentially you can search by almost any key in the JSON document by substituting it below in the query param. The values for the query parameter (q) must be encoded. Supported query options include:</p>
 
         <ul>
             <li>maxResults - limit the number of records returned. Defaults to 25. Example: ?q=assembly&maxResults=5</li>
+            <li>sort - the sorting for records returned. Defaults to the internal <i>_score</i> field. Example: ?q=assembly&sort=numSubmissions:desc</li>
         </ul>
 
         <h2>Simple Searches</h2>
 
         <ol>
-        <li><a href="/challenges/search?q=assembly">/challenges/search?q=assembly</a> - Keyword search across all fields (anywhere!) in the challenge</li>
-        <li><a href="/challenges/search?q=challengeName:IDOL">/challenges/search?q=challengeName:IDOL</a> - Keyword search in challenge name</li>
-        <li><a href="/challenges/search?q=challengeName:TCO*">/challenges/search?q=challengeName:TCO*</a> - Keyword search with wildcards(*)</li>
-        <li><a href="/challenges/search?q=challengeId:30033144">/challenges/search?q=challengeId:30033144</a> - Return challenge by ID</li>
-        <li><a href="/challenges/search?q=challengeType:First2Finish">/challenges/search?q=challengeType:First2Finish</a> - Return all &quot;First2Finish&#39; challenges</li>
-        <li><a href="/challenges/search?q=platforms:Other">/challenges/search?q=platforms:Other</a> - Search for all challenges with &#39;Other&#39; as one of the platforms</li>
-        <li><a href="/challenges/search?q=technologies:Apex,HTML">/challenges/search?q=technologies:Apex,HTML</a> - Search for all challenges with &#39;Apex&#39; and &#39;HTML&#39; as one of the technologies</li>
-        <li><a href="/challenges/search?q=numSubmissions:%3E20">/challenges/search?q=numSubmissions:&gt;20</a> - Search for all challenges with more than 20 submissions</li>
-        <li><a href="/challenges/search?q=currentStatus:Active">/challenges/search?q=currentStatus:Active</a> - Return all active challenges</li>
-        <li><a href="/challenges/search?q=submissionEndDate%3A%3E2014%2F05%2F01">/challenges/search?q=submissionEndDate%3A%3E2014%2F05%2F01</a> - All challenges with the submission end date later than May 1, 2014 (e.g., q=submissionEndDate:&gt;2014/05/01)</li>
+        <li><a href="/challenges/v2/search?q=assembly">/challenges/v2/search?q=assembly</a> - Keyword search across all fields (anywhere!) in the challenge</li>
+        <li><a href="/challenges/v2/search?q=challengeName:IDOL">/challenges/v2/search?q=challengeName:IDOL</a> - Keyword search in challenge name</li>
+        <li><a href="/challenges/v2/search?q=challengeName:TCO*">/challenges/v2/search?q=challengeName:TCO*</a> - Keyword search with wildcards(*)</li>
+        <li><a href="/challenges/v2/search?q=challengeId:30033144">/challenges/v2/search?q=challengeId:30033144</a> - Return challenge by ID</li>
+        <li><a href="/challenges/v2/search?q=challengeType:First2Finish">/challenges/v2/search?q=challengeType:First2Finish</a> - Return all &quot;First2Finish&#39; challenges</li>
+        <li><a href="/challenges/v2/search?q=platforms:Other">/challenges/v2/search?q=platforms:Other</a> - Search for all challenges with &#39;Other&#39; as one of the platforms</li>
+        <li><a href="/challenges/v2/search?q=technologies:Apex,HTML">/challenges/v2/search?q=technologies:Apex,HTML</a> - Search for all challenges with &#39;Apex&#39; and &#39;HTML&#39; as one of the technologies</li>
+        <li><a href="/challenges/v2/search?q=numSubmissions:%3E20">/challenges/v2/search?q=numSubmissions:&gt;20</a> - Search for all challenges with more than 20 submissions</li>
+        <li><a href="/challenges/v2/search?q=currentStatus:Active">/challenges/v2/search?q=currentStatus:Active</a> - Return all active challenges</li>
+        <li><a href="/challenges/v2/search?q=submissionEndDate%3A%3E2014%2F05%2F01">/challenges/v2/search?q=submissionEndDate%3A%3E2014%2F05%2F01</a> - All challenges with the submission end date later than May 1, 2014 (e.g., q=submissionEndDate:&gt;2014/05/01)</li>
         </ol>
 
         <h2>Complex Searches</h2>
@@ -52,20 +53,29 @@
         <p>If you want to search by more than one parameter, make sure you encode the q parameter. See <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//query-dsl-query-string-query.html#query-string-syntax">this Elasticsearch help page</a> for more information about complex query strings.</p>
 
         <ol>
-        <li><a href="/challenges/search?q=platforms:HP%20IDOL%20OnDemand%20AND%20currentPhaseName:(Submission%20OR%20Registration)">/challenges/search?q=platforms:HP%20IDOL%20OnDemand%20AND%20currentPhaseName:(Submission%20OR%20Registration)</a> - All challenges with &quot;HP IDOL OnDemand&quot; platform that are in &#39;Registration&#39; or &#39;Submission&#39; phase (e.g, q=platforms:HP IDOL OnDemand AND currentPhaseName:(Submission OR Registration))</li>
-        <li><a href="http://localhost:9393/challenges/search?q=challengeType:Assembly%20AND%20technologies:HTML%20-technologies:CSS">http://localhost:9393/challenges/search?q=challengeType:Assembly%20AND%20technologies:HTML%20-technologies:CSS</a> - All &#39;Assembly&quot; challenge type for HTML technology but <strong>not</strong> CSS technology (e.g, q=challengeType:Assembly AND technologies:HTML -technologies:CSS)</li>
-        <li><a href="/challenges/search?q=challengeType%3Acode%20numRegistrants%3A%3E20">/challenges/search?q=challengeType%3Acode%20numRegistrants%3A&gt;20</a> - All &#39;code&#39; challenges with more than 20 registrants (e.g, q=challengeType:code numRegistrants:&gt;20)</li>
-        <li><a href="/challenges/search?q=challengeType%3Acode%20numRegistrants%3A%5B1%20TO%205%5D">/challenges/search?q=challengeType%3Acode%20numRegistrants%3A%5B1%20TO%205%5D</a> - All &#39;code&#39; challenges with 5-10 registrants (e.g, q=challengeType:code numRegistrants:[1 TO 5]</li>
+        <li><a href="/challenges/v2/search?q=platforms:HP%20IDOL%20OnDemand%20AND%20currentPhaseName:(Submission%20OR%20Registration)">/challenges/v2/search?q=platforms:HP%20IDOL%20OnDemand%20AND%20currentPhaseName:(Submission%20OR%20Registration)</a> - All challenges with &quot;HP IDOL OnDemand&quot; platform that are in &#39;Registration&#39; or &#39;Submission&#39; phase (e.g, q=platforms:HP IDOL OnDemand AND currentPhaseName:(Submission OR Registration))</li>
+        <li><a href="/challenges/v2/search?q=challengeType:Assembly%20AND%20technologies:HTML%20-technologies:CSS">/challenges/v2/search?q=challengeType:Assembly%20AND%20technologies:HTML%20-technologies:CSS</a> - All &#39;Assembly&quot; challenge type for HTML technology but <strong>not</strong> CSS technology (e.g, q=challengeType:Assembly AND technologies:HTML -technologies:CSS)</li>
+        <li><a href="/challenges/v2/search?q=challengeType%3Acode%20numRegistrants%3A%3E20">/challenges/v2/search?q=challengeType%3Acode%20numRegistrants%3A&gt;20</a> - All &#39;code&#39; challenges with more than 20 registrants (e.g, q=challengeType:code numRegistrants:&gt;20)</li>
+        <li><a href="/challenges/v2/search?q=challengeType%3Acode%20numRegistrants%3A%5B1%20TO%205%5D">/challenges/v2/search?q=challengeType%3Acode%20numRegistrants%3A%5B1%20TO%205%5D</a> - All &#39;code&#39; challenges with 5-10 registrants (e.g, q=challengeType:code numRegistrants:[1 TO 5]</li>
         </ol>
 
-        <p>See the <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current//query-dsl-query-string-query.html#query-string-syntax" target="_blank">Elasticsearch query syntax</a> for more info.</p>
+        <h2>Sorting</h2>
+
+        <p>By default search sort asc by the <i>_score</i> field. However you can specify the sort of results:
+
+        <ul>
+          <li>field name: &sort=challengeName (defaults to ascending order)</li>
+          <li>field name with order: &sort=numSubmissions:desc</li>
+        </ul>
+
+        <p>Example: <a href="/challenges_v2/develop/_search?q=challengeName%3Atopblogger&sort=numSubmissions:desc">/challenges_v2/develop/_search?q=challengeName%3Atopblogger&sort=numSubmissions:desc</a></p>
 
         <h2>Searching by Specific Challenge Type</h2>
 
         <p>Virtually all of the above API calls work when specifying the type of challenge to return:</p>
 
         <ol>
-        <li><a href="/challenges/search?q=challengeName:IDOL">/challenges/search?q=challengeName:IDOL</a> - Returns <strong>any</strong> challenge with &quot;IDOL&quot; in the challenge name</li>
+        <li><a href="/challenges/v2/search?q=challengeName:IDOL">/challenges/v2/search?q=challengeName:IDOL</a> - Returns <strong>any</strong> challenge with &quot;IDOL&quot; in the challenge name</li>
         <li><a href="/challenges/design/search?q=challengeName:IDOL">/challenges/design/search?q=challengeName:IDOL</a> - Returns <strong>design</strong> challenges with &quot;IDOL&quot; in the challenge name</li>
         <li><a href="/challenges/develop/search?q=challengeName:IDOL">/challenges/develop/search?q=challengeName:IDOL</a> - Returns <strong>development</strong> challenges with &quot;IDOL&quot; in the challenge name</li>
         </ol>
